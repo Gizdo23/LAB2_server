@@ -11,11 +11,13 @@ app.get('/', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../view', 'index.html'));
 });
 app.use(express_1.default.static(path_1.default.join(__dirname, '../view')));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../dist')));
 // API endpoint example
 app.get('/api/message', (req, res) => {
     res.json({ message: 'Hello from the server!' });
 });
-// Set the server to listen on port 3000
+require('./app.js');
+const port = process.env.PORT || 3000;
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
