@@ -1,14 +1,9 @@
 import express from 'express';
 import path from 'path';
+import { handleCheckboxClick,parseText } from './routes';
 
-
-const bodyParser = require('body-parser'); // To parse JSON in request bodies
-const exampleController = require('app.js');
-
-// Create an instance of an Express app
 const app = express()
 
-app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../view', 'index.html'));
@@ -22,10 +17,12 @@ app.get('/api/message', (req, res) => {
     res.json({ message: 'Hello from the server!' });
   });
 
-  require('./app.js');
+app.post('/checkbox-clicked', handleCheckboxClick);
 
-const port = process.env.PORT || 3000;
+app.post('/parse-text', parseText)
 
-app.listen(3000, () => {
+const PORT = 3000;
+
+app.listen(PORT, () => {
   console.log('Server is running on http://localhost:3000');
 });
