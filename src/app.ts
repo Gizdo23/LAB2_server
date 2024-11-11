@@ -77,7 +77,7 @@ button.addEventListener('click', () => {
         <p>${cleanData}</p>
       `
         const container = document.createElement('div');
-        container.innerHTML = cleanData; // Inject the response as HTML
+        container.innerHTML = cleanData; 
         document.body.appendChild(container);
         
         if(clicked == false){
@@ -85,12 +85,12 @@ button.addEventListener('click', () => {
         scripts.forEach((script) => {
         const newScript = document.createElement('script');
         if (script.src) {
-          newScript.src = script.src; // Copy the src if it's an external script
+          newScript.src = script.src; 
         } else {
-          newScript.textContent = script.textContent; // Copy inline script content
+          newScript.textContent = script.textContent; 
         }
         document.body.appendChild(newScript);
-        script.remove(); // Remove the original script tag to avoid duplication
+        script.remove(); 
         
       });
       }

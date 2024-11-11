@@ -26,7 +26,6 @@ app.set('views', path.join(__dirname, '../view'));
 app.use(express.static(path.join(__dirname, '../view')));
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// API endpoint example
 app.get('/api/message', (req, res) => {
     res.json({ message: 'Hello from the server!' });
   });
