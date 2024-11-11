@@ -10,9 +10,7 @@ exports.handleCheckboxClick = handleCheckboxClick;
 const parseText = (req, res) => {
     const text = req.body.text;
     //console.log(text)
-    res.send(`
-        <p>${text}</p>
-      `);
+    res.send(text);
     //res.render('index', { message: text })
 };
 exports.parseText = parseText;

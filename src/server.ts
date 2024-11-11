@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { handleCheckboxClick,parseText } from './routes';
 import cors from 'cors';
-import DOMPurify from 'dompurify';
 
 
 const app = express()

@@ -5,6 +5,7 @@ let clicked: boolean = false;
 
 
 
+
 checkbox?.addEventListener('change', () => {
     if(checkbox.checked){
       clicked = true
@@ -33,10 +34,48 @@ button.addEventListener('click', () => {
       .then(response => response.text())
       .then(data => {
         //document.body.innerHTML += data;
-        let cleanData = data
+        let cleanData
         if(clicked == true){
-          cleanData = DOMPurify.sanitize(data);
+          cleanData = ''
+          let cleanMap = [];
+          let data1 = data
+          console.log(data)
+          console.log(data1)
+          const forbidden = ['<', '>', '{', '}', '"'];
+          for (let i = 0; i < data1.length; i++) {
+            if(forbidden.includes(data1.charAt(i))){
+              switch (data1.charAt(i)) {
+                case '<':
+                  cleanMap.push('&lt;');
+                  break;
+                case '>':
+                  cleanMap.push('&gt;');
+                  break;
+                case '{':
+                  cleanMap.push('&#123;');
+                  break;
+                case '}':
+                  cleanMap.push('&#125;');
+                  break;
+                case '"':
+                  cleanMap.push('&quot;');
+                  break;
+                default:
+                  cleanMap.push(data1.charAt(i));
+                  break;
+              }
+            }else{
+              cleanMap.push(data1.charAt(i));
+            }
+            cleanData = cleanMap.join('');
+          }
+        }else{
+          cleanData = data
         }
+        console.log(cleanData)
+        const xx = `
+        <p>${cleanData}</p>
+      `
         const container = document.createElement('div');
         container.innerHTML = cleanData; // Inject the response as HTML
         document.body.appendChild(container);
