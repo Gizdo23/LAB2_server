@@ -17,7 +17,6 @@ checkbox.addEventListener('change', () => {
 
 button.addEventListener('click', () => {
     const textValue = textbox.value;
-    document.body.innerHTML += `<p>${textValue}</p>`;
     fetch('/parse-text', {
         method: 'POST',
         headers: {
@@ -25,9 +24,9 @@ button.addEventListener('click', () => {
         },
         body: JSON.stringify({ text: textValue }),
       })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
-        console.log(data.message); // Log the server response
+        document.body.innerHTML += data; // Log the server response
       })
       .catch(error => console.error('Error:', error));
 })

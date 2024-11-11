@@ -1,9 +1,14 @@
 import express from 'express';
 import path from 'path';
 import { handleCheckboxClick,parseText } from './routes';
+import cors from 'cors';
+
 
 const app = express()
 
+app.use(cors());
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../view', 'index.html'));
