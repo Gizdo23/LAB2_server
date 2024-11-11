@@ -1,16 +1,57 @@
 "use strict";
-window.onload = () => {
-    const checkbox = document.getElementById("myCheckbox");
-    const textbox = document.getElementById("textinput1");
-    const button1 = document.getElementById("button1");
-    checkbox.addEventListener("change", () => {
-        if (checkbox.checked) {
-            console.log("yay");
+const checkbox = document.getElementById('myCheckbox');
+const textbox = document.getElementById('textinput1');
+const button = document.getElementById('button1');
+let clicked = false;
+checkbox === null || checkbox === void 0 ? void 0 : checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+        clicked = true;
+        fetch('/checkbox-clicked', {
+            method: 'POST'
+        })
+            .then(response => response.text())
+            .then(data => {
+            //console.log(data); // Log the server response
+        })
+            .catch(error => console.error('Error:', error));
+    }
+    else {
+        clicked = false;
+    }
+});
+button.addEventListener('click', () => {
+    const textValue = textbox.value;
+    fetch('/parse-text', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: textValue }),
+    })
+        .then(response => response.text())
+        .then(data => {
+        //document.body.innerHTML += data;
+        let cleanData = data;
+        if (clicked == true) {
+            cleanData = DOMPurify.sanitize(data);
         }
-    });
-    button1.addEventListener("click", () => {
-        const text = textbox.value;
-        console.log(text);
-        textbox.value = '';
-    });
-};
+        const container = document.createElement('div');
+        container.innerHTML = cleanData; // Inject the response as HTML
+        document.body.appendChild(container);
+        if (clicked == false) {
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach((script) => {
+                const newScript = document.createElement('script');
+                if (script.src) {
+                    newScript.src = script.src; // Copy the src if it's an external script
+                }
+                else {
+                    newScript.textContent = script.textContent; // Copy inline script content
+                }
+                document.body.appendChild(newScript);
+                script.remove(); // Remove the original script tag to avoid duplication
+            });
+        }
+    })
+        .catch(error => console.error('Error:', error));
+});

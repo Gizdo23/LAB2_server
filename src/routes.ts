@@ -8,10 +8,10 @@ export const handleCheckboxClick = (req: Request, res: Response) => {
 
 export const parseText = (req: Request, res: Response) => {
     const text  = req.body.text;
-    console.log('Received text:', text);
+    
     //console.log(text)
     res.send(`
         <p>${text}</p>
       `);
-
+    //res.render('index', { message: text })
 };

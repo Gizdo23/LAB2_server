@@ -13,5 +13,6 @@ const parseText = (req, res) => {
     res.send(`
         <p>${text}</p>
       `);
+    //res.render('index', { message: text })
 };
 exports.parseText = parseText;

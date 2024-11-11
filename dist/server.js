@@ -8,11 +8,17 @@ const path_1 = __importDefault(require("path"));
 const routes_1 = require("./routes");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3001'
+}));
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../view', 'index.html'));
+    //res.sendFile(path.join(__dirname, '../view', 'index.html'));
+    res.render('index');
 });
+app.set('views', path_1.default.join(__dirname, '../view'));
 app.use(express_1.default.static(path_1.default.join(__dirname, '../view')));
 app.use(express_1.default.static(path_1.default.join(__dirname, '../dist')));
 // API endpoint example
